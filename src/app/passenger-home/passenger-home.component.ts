@@ -73,7 +73,7 @@ export class PassengerHomeComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
             {
-                "visibility": "simplified"
+                "visibility": "on"
             },
             {
                 "color": "#8dab68"
@@ -85,7 +85,7 @@ export class PassengerHomeComponent implements OnInit {
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "visibility": "simplified"
+                "visibility": "on"
             }
         ]
     },
@@ -112,7 +112,7 @@ export class PassengerHomeComponent implements OnInit {
         "elementType": "labels.icon",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -147,7 +147,7 @@ export class PassengerHomeComponent implements OnInit {
         "featureType": "transit",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -171,7 +171,7 @@ export class PassengerHomeComponent implements OnInit {
                 "color": "#7f2200"
             },
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -204,7 +204,7 @@ export class PassengerHomeComponent implements OnInit {
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     }
