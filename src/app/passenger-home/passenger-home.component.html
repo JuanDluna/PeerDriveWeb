@@ -1,14 +1,15 @@
+<app-navbar></app-navbar>
 <div class="container2">
     <div class="left-panel">
-      <h2>Plan your ride</h2>
+      <h1 class="my-5">plan your ride</h1>
       <form (submit)="searchRoute()">
-        <label for="origin">Origin:</label>
+        <label class="fs-4" for="origin">origin:</label>
         <input type="text" id="origin" [(ngModel)]="origin" name="origin" required #originInput />
   
-        <label for="destination">Destination:</label>
+        <label class="fs-4" for="destination">destination:</label>
         <input type="text" id="destination" [(ngModel)]="destination" name="destination" required #destinationInput />
   
-        <button  class="" type="submit">Search</button>
+        <button  class="mt-5 fs-4" type="submit">search</button>
       </form>
     </div>
   
@@ -20,8 +21,13 @@
         [width]="'100%'"
         [center]="center"
         [zoom]="zoom">
-        <!-- <map-marker *ngIf="userLocation" [position]="userLocation"></map-marker> -->
-      </google-map>
+        <map-circle
+        *ngIf="userLocation"
+        [center]="userLocation"
+        [radius]="accuracy" 
+        [options]="circleOptions">
+      </map-circle>      
+    </google-map>
     </div>
   </div>
   

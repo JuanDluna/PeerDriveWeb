@@ -5,17 +5,19 @@ import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
-  selector: 'app-passenger-home',
+  selector: 'app-driver-home',
   standalone: true,
   imports: [GoogleMap, GoogleMapsModule, FormsModule, CommonModule, NavbarComponent],
-  templateUrl: './passenger-home.component.html',
-  styleUrl: './passenger-home.component.css'
+  templateUrl: './driver-home.component.html',
+  styleUrl: './driver-home.component.css'
 })
-export class PassengerHomeComponent implements OnInit, AfterViewInit {
-  userLocation: google.maps.LatLngLiteral | null = null;
+export class DriverHomeComponent {
+userLocation: google.maps.LatLngLiteral | null = null;
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   zoom = 16;
   origin: string = '';
+  passengers: number = 1; 
+  fare: number = 0;
   destination: string = '';
 
 
@@ -31,7 +33,7 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
     editable: false,
     draggable: false
   };
-
+  
   mapStyle = [
     {
         "featureType": "water",
@@ -352,7 +354,8 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
 
       if (this.directionsService && this.directionsRenderer) {
         console.log("ya se pusieron las direcciones");
-
+        console.log("passengers: ", this.passengers);
+        console.log("Fare: ", this.fare);
         this.directionsService.route(request, (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
             this.directionsRenderer?.setDirections(result);
@@ -374,8 +377,6 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
       this.directionsRenderer = new google.maps.DirectionsRenderer();
       this.directionsRenderer.setMap(this.googleMap.googleMap); // Asignamos el mapa a la dirección renderer
     
-
-
       this.googleMap.googleMap.setOptions({
         styles: this.mapStyle,
         disableDefaultUI: false,
@@ -386,6 +387,4 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
     
     }
   }
-  
-
 }

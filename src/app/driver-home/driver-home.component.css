@@ -3,6 +3,7 @@
     height: calc(100vh - 60px); 
     width: 100vw;
   }
+
   
   .left-panel {
     width: 30%;
@@ -51,6 +52,6 @@
   }
   
 
-  .fs-4 {
+ .fs-4 {
     font-size: 1.3rem !important;
  }

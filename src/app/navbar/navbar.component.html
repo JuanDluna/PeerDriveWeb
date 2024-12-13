@@ -1,0 +1,22 @@
+<div class="navbar2">
+    <div class="logo"><a href="#">peerDrive</a></div>
+    <ul class="links">
+      <li><a href="home">home</a></li>
+      <li><a href="about">about</a></li>
+      <li><a href="help">help</a></li>
+      <li><a href="contact">contact</a></li>
+    </ul>
+    <a href="#" class="action_btn">join now</a>
+    <div class="toggle_btn" (click)="toggleMenu()">
+      <i [ngClass]="menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+    </div>
+  </div>
+  
+  <div class="dropdown_menu" [ngClass]="{'open': menuOpen}">
+    <li><a href="home">home</a></li>
+    <li><a href="about">about</a></li>
+    <li><a href="help">help</a></li>
+    <li><a href="contact">contact</a></li>
+    <a href="#" class="action_btn">join now</a>
+  </div>
+  

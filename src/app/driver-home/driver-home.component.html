@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+
+<div class="container2">
+    <div class="left-panel">
+        <h1 class="my-5">post your ride</h1>
+        <form (submit)="searchRoute()">
+        <label class="fs-4" for="origin">origin:</label>
+        <input type="text" id="origin" [(ngModel)]="origin" name="origin" required #originInput />
+    
+        <label class="fs-4" for="destination">destination:</label>
+        <input type="text" id="destination" [(ngModel)]="destination" name="destination" required #destinationInput />
+    
+        <label class="fs-4" for="passengers">number of passengers:</label>
+        <input 
+            type="number" 
+            id="passengers" 
+            [(ngModel)]="passengers" 
+            name="passengers" 
+            min="1" 
+            max="4"
+            required />
+
+        <!-- Nuevo campo: Tarifa -->
+        <label class="fs-4" for="fare">fare ($):</label>
+        <input 
+            type="number" 
+            id="fare" 
+            [(ngModel)]="fare" 
+            name="fare" 
+            min="0" 
+            step="0.5" 
+            required />
+
+        <button class="mt-5 fs-4" type="submit">search</button>
+        </form>
+    </div>
+    
+    <!-- Mapa -->
+    <div class="map-container">
+        <google-map 
+            #googleMap
+            [height]="'100%'"
+            [width]="'100%'"
+            [center]="center"
+            [zoom]="zoom">
+            <map-circle
+            *ngIf="userLocation"
+            [center]="userLocation"
+            [radius]="accuracy" 
+            [options]="circleOptions">
+            </map-circle>      
+        </google-map>
+    </div>
+      
+
