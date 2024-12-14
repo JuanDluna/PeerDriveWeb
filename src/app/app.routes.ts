@@ -4,6 +4,7 @@ import { PassengerHomeComponent } from './passenger-home/passenger-home.componen
 import { DriverHomeComponent } from './driver-home/driver-home.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { FaqComponent } from './faq/faq.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -11,5 +12,6 @@ export const routes: Routes = [
     {path: 'driver', component: DriverHomeComponent},
     {path: 'home', component: HomeComponent },
     {path: 'about', component: AboutComponent },
+    {path: 'help', component: FaqComponent },
     {path:  '**', pathMatch:"full", redirectTo: 'home'}
 ];
