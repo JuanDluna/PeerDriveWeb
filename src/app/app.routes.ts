@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { PassengerHomeComponent } from './passenger-home/passenger-home.component';
 import { DriverHomeComponent } from './driver-home/driver-home.component';
+import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
@@ -9,5 +10,6 @@ export const routes: Routes = [
     {path: 'passenger', component: PassengerHomeComponent},
     {path: 'driver', component: DriverHomeComponent},
     {path: 'home', component: HomeComponent },
+    {path: 'about', component: AboutComponent },
     {path:  '**', pathMatch:"full", redirectTo: 'home'}
 ];
