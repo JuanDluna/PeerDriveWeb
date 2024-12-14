@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  .main-container {
+    height: 100vh;
+    /* background-color: none; */
+    position: relative; /* Necesario para posicionar el pseudo-elemento */
+    overflow: hidden; /* Para evitar que el pseudo-elemento se desborde */
+}
+
+.main-container::before {
+    content: ''; /* Requerido para pseudo-elementos */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../../assets/bg.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px); /* Ajusta el valor del blur aquí */
+    z-index: -1; /* Envía el pseudo-elemento detrás del contenido */
+}
+
+  .about-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .about-header h1 {
+    font-size: 2.5em;
+    color: #abce83;
+    margin-bottom: 10px;
+  }
+  
+  .about-header p {
+    font-size: 1.2em;
+    color: #555;
+  }
+  
+  .about-content article {
+    margin-bottom: 20px;
+  }
+  
+  .about-content h2 {
+    font-size: 1.8em;
+    color: #abce83;
+    margin-bottom: 10px;
+  }
+  
+  .about-content p {
+    font-size: 1em;
+    line-height: 1.6;
+  }
+  
+  .about-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #777;
+  }
+  
