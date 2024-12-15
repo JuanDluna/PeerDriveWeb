@@ -6,11 +6,17 @@ body {
   }
   
   .main-container {
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
   }
-  
+  .center-div {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .main-container::before {
     content: '';
     position: absolute;
@@ -27,7 +33,7 @@ body {
   
   .faq-container {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 20px 20px;
     padding: 20px;
     background: #fff;
     border-radius: 10px;

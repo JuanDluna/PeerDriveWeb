@@ -1,5 +1,5 @@
 .main-container {
-    height: 100vh;
+    min-height: 100vh;
     /* background-color: none; */
     position: relative; /* Necesario para posicionar el pseudo-elemento */
     overflow: hidden; /* Para evitar que el pseudo-elemento se desborde */
