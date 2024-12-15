@@ -17,7 +17,7 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
   zoom = 16;
   origin: string = '';
   destination: string = '';
-
+  selectingFor: 'origin' | 'destination' | null = null;
 
   accuracy = 50; // Radio en metros
 
@@ -241,6 +241,23 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.onMapLoad();
+
+    if (this.googleMap?.googleMap) {
+      this.googleMap.googleMap.addListener('click', (event: google.maps.MapMouseEvent) => {
+        if (this.selectingFor && event.latLng) {
+          const latLng = event.latLng;
+          this.getAddressFromLatLng(latLng, this.selectingFor);
+          this.selectingFor = null; // Resetea el estado después de seleccionar
+        }
+      });
+    }
+  }
+
+  
+
+  enableMapSelection(type: 'origin' | 'destination') {
+    this.selectingFor = type;
+    alert(`Click on the map to select ${type}`);
   }
 
   // Obtener ubicación del dispositivo
@@ -317,8 +334,12 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
   
           if (type === 'origin') {
             this.origin = address;
+            const input = document.getElementById('origin') as HTMLInputElement;
+            input.value = address; // Actualiza el valor del input
           } else {
             this.destination = address;
+            const input = document.getElementById('destination') as HTMLInputElement;
+            input.value = address; // Actualiza el valor del input
           }
   
           // También actualizamos la posición central del mapa

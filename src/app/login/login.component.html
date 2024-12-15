@@ -10,7 +10,7 @@
 							type="email"
 							class="login__input"
 							formControlName="email"
-							placeholder="Username"
+							placeholder="Email"
 						/>
 						<div
 							*ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
@@ -42,6 +42,8 @@
 						<span class="button__text">Log In</span>
 						<i class="button__icon fas fa-chevron-right"></i>
 					</button>
+					<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
 				</form>
 				<div class="social-login">
 					<h3>Log in via</h3>

@@ -30,6 +30,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 70%;
   }
   
   .left-panel button {
@@ -39,6 +40,10 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  .boton2 {
+    width: calc(30% - 5px);
   }
   
   .left-panel button:hover {

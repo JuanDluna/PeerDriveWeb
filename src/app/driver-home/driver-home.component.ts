@@ -11,7 +11,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
   templateUrl: './driver-home.component.html',
   styleUrl: './driver-home.component.css'
 })
-export class DriverHomeComponent {
+export class DriverHomeComponent implements OnInit, AfterViewInit {
 userLocation: google.maps.LatLngLiteral | null = null;
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   zoom = 16;
@@ -19,6 +19,7 @@ userLocation: google.maps.LatLngLiteral | null = null;
   passengers: number = 1; 
   fare: number = 0;
   destination: string = '';
+  selectingFor: 'origin' | 'destination' | null = null;
 
 
   accuracy = 50; // Radio en metros
@@ -243,6 +244,23 @@ userLocation: google.maps.LatLngLiteral | null = null;
 
   ngAfterViewInit() {
     this.onMapLoad();
+
+    if (this.googleMap?.googleMap) {
+      this.googleMap.googleMap.addListener('click', (event: google.maps.MapMouseEvent) => {
+        if (this.selectingFor && event.latLng) {
+          const latLng = event.latLng;
+          this.getAddressFromLatLng(latLng, this.selectingFor);
+          this.selectingFor = null; // Resetea el estado después de seleccionar
+        }
+      });
+    }
+  }
+
+  
+
+  enableMapSelection(type: 'origin' | 'destination') {
+    this.selectingFor = type;
+    alert(`Click on the map to select ${type}`);
   }
 
   // Obtener ubicación del dispositivo
@@ -319,8 +337,12 @@ userLocation: google.maps.LatLngLiteral | null = null;
   
           if (type === 'origin') {
             this.origin = address;
+            const input = document.getElementById('origin') as HTMLInputElement;
+            input.value = address; // Actualiza el valor del input
           } else {
             this.destination = address;
+            const input = document.getElementById('destination') as HTMLInputElement;
+            input.value = address; // Actualiza el valor del input
           }
   
           // También actualizamos la posición central del mapa

@@ -43,7 +43,7 @@
   }
   
   .left-panel button:hover {
-    background-color: #9BBF72;
+    background-color: #759850;
   }
   
   .map-container {
@@ -55,3 +55,12 @@
  .fs-4 {
     font-size: 1.3rem !important;
  }
+
+ .boton2 {
+  width: calc(30% - 5px);
+}
+
+.left-panel .input2 input {
+  width: 70%;
+
+}

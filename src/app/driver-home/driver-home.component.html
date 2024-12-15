@@ -4,12 +4,17 @@
     <div class="left-panel">
         <h1 class="my-5">post your ride</h1>
         <form (submit)="searchRoute()">
-        <label class="fs-4" for="origin">origin:</label>
-        <input type="text" id="origin" [(ngModel)]="origin" name="origin" required #originInput />
-    
-        <label class="fs-4" for="destination">destination:</label>
-        <input type="text" id="destination" [(ngModel)]="destination" name="destination" required #destinationInput />
-    
+            <label class="fs-4" for="origin">origin:</label>
+            <div class="input2">
+              <input type="text" id="origin" [(ngModel)]="origin" name="origin" required #originInput />
+              <button type="button" class="ms-1 boton2" (click)="enableMapSelection('origin')">select on map</button>
+            </div>
+          
+            <label class="fs-4" for="destination">destination:</label>
+            <div class="input2">
+              <input type="text" id="destination" [(ngModel)]="destination" name="destination" required #destinationInput />
+              <button type="button" class="ms-1 boton2" (click)="enableMapSelection('destination')">select on map</button>
+            </div>
         <label class="fs-4" for="passengers">number of passengers:</label>
         <input 
             type="number" 
