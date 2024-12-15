@@ -10,6 +10,18 @@ body {
     /* background-color: none; */
     position: relative; /* Necesario para posicionar el pseudo-elemento */
     overflow: hidden; /* Para evitar que el pseudo-elemento se desborde */
+    /* display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center;  */
+}
+
+.center-div {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-container::before {
