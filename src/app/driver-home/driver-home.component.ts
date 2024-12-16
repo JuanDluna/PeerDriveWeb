@@ -3,6 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { TripService } from '../services/trip.service';
 
 @Component({
   selector: 'app-driver-home',
@@ -20,6 +21,11 @@ userLocation: google.maps.LatLngLiteral | null = null;
   fare: number = 0;
   destination: string = '';
   selectingFor: 'origin' | 'destination' | null = null;
+  driverId: string | null = null;
+  dlat: number =  0;
+  dlng: number = 0;
+  olat: number = 0;
+  olng: number = 0;
 
 
   accuracy = 50; // Radio en metros
@@ -235,7 +241,7 @@ userLocation: google.maps.LatLngLiteral | null = null;
   directionsService: google.maps.DirectionsService | null = null;
   directionsRenderer: google.maps.DirectionsRenderer | null = null;
 
-  constructor() {}
+  constructor(private tripService: TripService) {}
 
   ngOnInit() {
     this.getUserLocation();
@@ -336,10 +342,14 @@ userLocation: google.maps.LatLngLiteral | null = null;
           const address = results[0].formatted_address;
   
           if (type === 'origin') {
+            this.olat = latLng.lat();
+            this.olng = latLng.lng();
             this.origin = address;
             const input = document.getElementById('origin') as HTMLInputElement;
             input.value = address; // Actualiza el valor del input
           } else {
+            this.dlat = latLng.lat();
+            this.dlng = latLng.lng();
             this.destination = address;
             const input = document.getElementById('destination') as HTMLInputElement;
             input.value = address; // Actualiza el valor del input
@@ -407,6 +417,41 @@ userLocation: google.maps.LatLngLiteral | null = null;
         mapTypeControl: false, 
       });
     
+    }
+  }
+
+  postTrip() {
+
+    this.driverId = localStorage.getItem('token');
+
+
+    if (this.olat && this.olng && this.dlat && this.dlng) {
+    
+      console.log("olat", this.olat);
+      console.log("olng", this.olng);
+      console.log("dlat", this.dlat);
+      console.log("dlng", this.dlng);
+
+    const tripData = {
+      origin: { lat: this.olat, lng: this.olng },
+      destination: { lat: this.dlat, lng: this.dlng },
+      schedule: new Date().toISOString(), // Puedes reemplazarlo con un valor real
+      driverId: this.driverId, // Cambia esto por el ID real del conductor
+      passengerCount: this.passengers,
+      fare: this.fare
+    };
+
+    this.tripService.addTrip(tripData).subscribe({
+      next: (response) => {
+        alert('Viaje publicado con éxito');
+      },
+      error: (error) => {
+        console.error('Error al publicar el viaje:', error);
+        alert('No se pudo publicar el viaje. Inténtalo de nuevo.');
+      }
+    });
+    } else {
+      alert('Please select valid origin and destination locations.');
     }
   }
 }
