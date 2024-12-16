@@ -59,3 +59,19 @@
   .fs-4 {
     font-size: 1.3rem !important;
  }
+
+ .trip-results {
+  color: black;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+.trip-results ul {
+  list-style: none;
+  padding: 0;
+}
+.trip-results li {
+  margin-bottom: 10px;
+}

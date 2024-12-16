@@ -2,7 +2,7 @@
 <div class="container2">
     <div class="left-panel">
       <h1 class="my-5">plan your ride</h1>
-      <form (submit)="searchRoute()">
+      <form (ngSubmit)="searchTrips()">
         <label class="fs-4" for="origin">origin:</label>
         <div class="">
           <input type="text" id="origin" [(ngModel)]="origin" name="origin" required #originInput />
@@ -17,6 +17,20 @@
       
         <button class="mt-5 fs-4" type="submit">search</button>
       </form>
+
+      <div class="trip-results" *ngIf="trips.length > 0">
+        <h3>Viajes encontrados:</h3>
+        <ul>
+          <li *ngFor="let trip of trips">
+            <strong>Conductor:</strong> {{ trip.driverName }} <br>
+            <strong>Teléfono:</strong> {{ trip.phoneNumber }} <br>
+            <strong>Ruta:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }})
+          </li>
+        </ul>
+          
+        
+      </div>
+
     </div>
   
     <!-- Mapa -->

@@ -3,6 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { TripService } from '../services/trip.service';
 
 @Component({
   selector: 'app-passenger-home',
@@ -18,7 +19,13 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
   origin: string = '';
   destination: string = '';
   selectingFor: 'origin' | 'destination' | null = null;
+  dlat: number =  0;
+  dlng: number = 0;
+  olat: number = 0;
+  olng: number = 0;
 
+  trips: any[] = []; // Lista de viajes encontrados
+  
   accuracy = 50; // Radio en metros
 
   circleOptions: google.maps.CircleOptions = {
@@ -232,7 +239,7 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
   directionsService: google.maps.DirectionsService | null = null;
   directionsRenderer: google.maps.DirectionsRenderer | null = null;
 
-  constructor() {}
+  constructor(private tripService: TripService) {}
 
   ngOnInit() {
     this.getUserLocation();
@@ -333,10 +340,14 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
           const address = results[0].formatted_address;
   
           if (type === 'origin') {
+            this.olat = latLng.lat();
+            this.olng = latLng.lng();
             this.origin = address;
             const input = document.getElementById('origin') as HTMLInputElement;
             input.value = address; // Actualiza el valor del input
           } else {
+            this.dlat = latLng.lat();
+            this.dlng = latLng.lng();
             this.destination = address;
             const input = document.getElementById('destination') as HTMLInputElement;
             input.value = address; // Actualiza el valor del input
@@ -408,5 +419,26 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
     }
   }
   
+  searchTrips() {
+    if (!this.olat || !this.olng || !this.dlat || !this.dlng) {
+      alert('Please select both origin and destination.');
+      return;
+    }
+  
+    const origin = { lat: this.olat, lng: this.olng };
+    const destination = { lat: this.dlat, lng: this.dlng };
+  
+    this.tripService.findTrips(origin, destination).subscribe(
+      (trips) => {
+        console.log('Trips found:', trips);
+        // alert(`${trips.length} trips found.`);
+        this.trips = trips;
+      },
+      (error) => {
+        console.error('Error finding trips:', error);
+        // alert('Error finding trips. Please try again.');
+      }
+    );
+  }
 
 }

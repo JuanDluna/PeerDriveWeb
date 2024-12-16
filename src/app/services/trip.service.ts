@@ -13,4 +13,8 @@ export class TripService {
   addTrip(tripData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/addTrip`, tripData);
   }
+  findTrips(origin: { lat: number, lng: number }, destination: { lat: number, lng: number }): Observable<any> {
+    const body = { origin, destination };
+    return this.http.post(`${this.baseUrl}/find`, body);
+  }
 }
