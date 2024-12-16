@@ -113,18 +113,20 @@
 				  
 					<!-- Campos para los detalles del auto, visibles solo si se selecciona Driver -->
 					<div *ngIf="isDriver()">
-					  <div class="login__field">
-						<i class="login__icon fas fa-car"></i>
-						<input type="text" class="login__input" placeholder="Plate" formControlName="carDetails.plate" />
-					  </div>
-					  <div class="login__field">
-						<i class="login__icon fas fa-car-side"></i>
-						<input type="text" class="login__input" placeholder="Model" formControlName="carDetails.model" />
-					  </div>
-					  <div class="login__field">
-						<i class="login__icon fas fa-paint-brush"></i>
-						<input type="text" class="login__input" placeholder="Color" formControlName="carDetails.color" />
-					  </div>
+						<div formGroupName="carDetails">
+							<div class="login__field">
+							  <i class="login__icon fas fa-car"></i>
+							  <input type="text" class="login__input" placeholder="Plate" formControlName="plate" />
+							</div>
+							<div class="login__field">
+							  <i class="login__icon fas fa-car-side"></i>
+							  <input type="text" class="login__input" placeholder="Model" formControlName="model" />
+							</div>
+							<div class="login__field">
+							  <i class="login__icon fas fa-paint-brush"></i>
+							  <input type="text" class="login__input" placeholder="Color" formControlName="color" />
+							</div>
+						  </div>
 					</div>
 				  
 					<button class="button login__submit" type="submit">

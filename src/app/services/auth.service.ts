@@ -23,15 +23,21 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('name');
   }
 
-  saveSession(token: string, role: string): void {
+  saveSession(token: string, role: string, name: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('role', role);
+    localStorage.setItem('name', name);
   }
 
   getRole(): string | null {
     return localStorage.getItem('role');
+  }
+
+  getName(): string | null {
+    return localStorage.getItem('name');
   }
 
   isAuthenticated(): boolean {

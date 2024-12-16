@@ -50,8 +50,9 @@ export class LoginComponent {
           if (response?.user?.type) {
             const token = response.user.id;
             const role = response.user.type;
+            const name = response.user.name;
 
-            this.authService.saveSession(token, role);
+            this.authService.saveSession(token, role, name);
             this.router.navigate([`/${role}`]);
           } else {
             this.errorMessage = 'Unexpected response structure.';
@@ -71,11 +72,15 @@ export class LoginComponent {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
       console.log("fui valido");
+      console.log("car details", formData.carDetails.plate);
+
       // Si el tipo es 'passenger', limpiamos los detalles del auto
       if (formData.type === 'passenger') {
         console.log("soy pasajero");
-        formData.carDetails = null;
+        // formData.carDetails = null;
       }
+
+      console.log("car details", formData.carDetails.plate);
 
       this.authService.register(formData).subscribe({
         next: () => {

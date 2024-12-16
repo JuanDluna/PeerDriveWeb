@@ -463,14 +463,19 @@ userLocation: google.maps.LatLngLiteral | null = null;
       console.log("dlat", this.dlat);
       console.log("dlng", this.dlng);
 
+      const schedule = new Date().toISOString();
+
+      console.log("schedule ", schedule);
+
     const tripData = {
       origin: { lat: this.olat, lng: this.olng },
       destination: { lat: this.dlat, lng: this.dlng },
-      schedule: new Date().toISOString(), // Puedes reemplazarlo con un valor real
+      schedule: schedule, // Puedes reemplazarlo con un valor real
       driverId: this.driverId, // Cambia esto por el ID real del conductor
       passengerCount: this.passengers,
       fare: this.fare
     };
+
 
     this.tripService.addTrip(tripData).subscribe({
       next: (response) => {

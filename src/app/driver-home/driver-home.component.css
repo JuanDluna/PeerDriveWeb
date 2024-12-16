@@ -11,6 +11,8 @@
     background-color: #2d2a2e;
     color: white;
     border-right: 1px solid #ddd;
+    height: calc(100vh - 60px); /* Fija la altura del panel al 100% del viewport */
+    overflow-y: auto;
   }
   
   .left-panel h2 {

@@ -23,24 +23,41 @@
         <h3 *ngIf="!selectedTrip">trips found</h3>
         <!-- <ul> -->
           <ng-container *ngIf="!selectedTrip" >
-            <button class="tripsFound"  *ngFor="let trip of trips" (click)="addUserToTrip(trip.tripId)">
-              <strong>driver:</strong> {{ trip.driverName }} <br>
-              <strong>phone number:</strong> {{ trip.phoneNumber }} <br>
-              <strong>route:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }}) <br>
-              <strong>fare:</strong> ${{ trip.fare }}
-            </button>
+            <ng-container *ngFor="let trip of trips">
+              <button class="tripsFound mt-3"  *ngIf="trip.remainingTime > 0" (click)="addUserToTrip(trip.tripId)">
+              
+                <strong>driver:</strong> {{ trip.driverName }} <br>
+                <strong>driver plate:</strong> {{ trip.carDetails.plate }} <br>
+                <strong>driver model:</strong> {{ trip.carDetails.model }} <br>
+                <strong>driver color:</strong> {{ trip.carDetails.color }} <br>
+                <strong>schedule:</strong> {{ trip.schedule }} <br>
+                <strong>phone number:</strong> {{ trip.phoneNumber }} <br>
+                <strong>route:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }}) <br>
+                <strong>fare:</strong> ${{ trip.fare }} <br>
+                <span *ngIf="trip.remainingTime > 0">
+                  <strong>Time left:</strong> {{ trip.remainingTime | date:'mm:ss' }}
+                </span>
+              </button>
+            </ng-container>
+             <br>
 
           </ng-container>
           
 
           <ng-container *ngIf="selectedTrip">
             <h3>selected trip</h3>
+            <p><strong>driver plate:</strong> {{ selectedTrip.carDetails.plate }}</p>
+            <p><strong>driver model:</strong> {{ selectedTrip.carDetails.model }}</p>
+            <p><strong>driver color:</strong> {{ selectedTrip.carDetails.color }}</p>
+
             <p><strong>driver:</strong> {{ selectedTrip.driverName }}</p>
             <p><strong>phone number:</strong> {{ selectedTrip.phoneNumber }}</p>
             <p><strong>route:</strong> ({{ selectedTrip.route.origin.lat }}, {{ selectedTrip.route.origin.lng }}) → ({{ selectedTrip.route.destination.lat }}, {{ selectedTrip.route.destination.lng }})</p>
             <p><strong>fare:</strong> ${{ selectedTrip.fare }}</p>
-            <!-- <button class="boton2" (click)="clearSelection()">Volver</button> -->
-          </ng-container>
+            <span *ngIf="selectedTrip.remainingTime > 0">
+              <strong>Time left:</strong> {{ selectedTrip.remainingTime | date:'mm:ss' }}
+            </span>
+                    </ng-container>
         <!-- </ul> -->
           
         

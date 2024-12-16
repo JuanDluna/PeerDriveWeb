@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { TripService } from '../services/trip.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-passenger-home',
@@ -246,6 +247,7 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getUserLocation();
     this.initializeAutocomplete();
+    this.startCountdown();
   }
 
   ngAfterViewInit() {
@@ -419,6 +421,26 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
       });
     
     }
+  }
+
+  startCountdown() {
+    // Ejecutar cada segundo
+    interval(1000).subscribe(() => {
+      const currentTime = new Date().getTime();
+
+      this.trips.forEach(trip => {
+        const scheduleTime = new Date(trip.schedule).getTime();
+        const timeDiff = scheduleTime + 15 * 60 * 1000 - currentTime; // 15 minutos en milisegundos
+
+        // Si el tiempo restante es positivo, actualizarlo
+        if (timeDiff > 0) {
+          trip.remainingTime = timeDiff;
+        } else {
+          // Si ya no queda tiempo, ocultar el contador
+          trip.remainingTime = 0;
+        }
+      });
+    });
   }
   
   searchTrips() {

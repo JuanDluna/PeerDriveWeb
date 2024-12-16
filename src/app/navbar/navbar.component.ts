@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit{
 
   isAuthenticated: boolean = false;
   role: string | null = null;
-
+  name: string | null = null;
   menuOpen: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit{
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
     this.role = this.authService.getRole();
+    this.name = this.authService.getName();
   }
 
   logout(): void {
