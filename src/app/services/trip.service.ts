@@ -17,4 +17,9 @@ export class TripService {
     const body = { origin, destination };
     return this.http.post(`${this.baseUrl}/find`, body);
   }
+
+  addUserInTrip(tripId: string, userId: string): Observable<any> {
+    const body = { tripId, userId };
+    return this.http.post(`${this.baseUrl}/addUserInTrip`, body);
+  }
 }

@@ -67,7 +67,7 @@
 					<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 				</form>
 
-				<form *ngIf="currentView === 'register'" class="login">
+				<!-- <form *ngIf="currentView === 'register'" class="login">
 					<div class="login__field">
 						<i class="login__icon fas fa-user"></i>
 						<input type="text" class="login__input" placeholder="Name" />
@@ -84,7 +84,55 @@
 						<span class="button__text">Register</span>
 						<i class="button__icon fas fa-chevron-right"></i>
 					</button>
-				</form>
+				</form> -->
+
+				<form *ngIf="currentView === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+					<div class="login__field">
+					  <i class="login__icon fas fa-user"></i>
+					  <input type="text" class="login__input" placeholder="Name" formControlName="name" />
+					</div>
+					<div class="login__field">
+					  <i class="login__icon fas fa-envelope"></i>
+					  <input type="email" class="login__input" placeholder="Email" formControlName="email" />
+					</div>
+					<div class="login__field">
+					  <i class="login__icon fas fa-lock"></i>
+					  <input type="password" class="login__input" placeholder="Password" formControlName="password" />
+					</div>
+					<div class="login__field">
+					  <i class="login__icon fas fa-phone"></i>
+					  <input type="text" class="login__input" placeholder="Phone Number" formControlName="phoneNumber" />
+					</div>
+					<div class="login__field">
+					  <label for="type">Type</label>
+					  <select id="type" class="login__input" formControlName="type">
+						<option value="driver">Driver</option>
+						<option value="passenger">Passenger</option>
+					  </select>
+					</div>
+				  
+					<!-- Campos para los detalles del auto, visibles solo si se selecciona Driver -->
+					<div *ngIf="isDriver()">
+					  <div class="login__field">
+						<i class="login__icon fas fa-car"></i>
+						<input type="text" class="login__input" placeholder="Plate" formControlName="carDetails.plate" />
+					  </div>
+					  <div class="login__field">
+						<i class="login__icon fas fa-car-side"></i>
+						<input type="text" class="login__input" placeholder="Model" formControlName="carDetails.model" />
+					  </div>
+					  <div class="login__field">
+						<i class="login__icon fas fa-paint-brush"></i>
+						<input type="text" class="login__input" placeholder="Color" formControlName="carDetails.color" />
+					  </div>
+					</div>
+				  
+					<button class="button login__submit" type="submit">
+					  <span class="button__text">Register</span>
+					  <i class="button__icon fas fa-chevron-right"></i>
+					</button>
+				  </form>
+				  
 			</div>
 			<div class="screen__background">
 				<span class="screen__background__shape screen__background__shape4"></span>

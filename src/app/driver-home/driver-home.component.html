@@ -36,7 +36,9 @@
             step="0.5" 
             required />
 
-        <button class="mt-5 fs-4" type="submit">post</button>
+        <button *ngIf="!postedRide" class="mt-5 fs-4" type="submit">post</button>
+        <button *ngIf="postedRide" class="mt-5 fs-4" type="submit" disabled>your ride has been posted</button>
+
         </form>
     </div>
     

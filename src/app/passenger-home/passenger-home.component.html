@@ -2,6 +2,7 @@
 <div class="container2">
     <div class="left-panel">
       <h1 class="my-5">plan your ride</h1>
+      
       <form (ngSubmit)="searchTrips()">
         <label class="fs-4" for="origin">origin:</label>
         <div class="">
@@ -15,18 +16,32 @@
           <button type="button" class="ms-1 boton2" (click)="enableMapSelection('destination')">select on map</button>
         </div>
       
-        <button class="mt-5 fs-4" type="submit">search</button>
+        <button *ngIf="!selectedTrip" class="mt-5 fs-4" type="submit">search</button>
       </form>
 
       <div class="trip-results" *ngIf="trips.length > 0">
-        <h3>Viajes encontrados:</h3>
-        <ul>
-          <li *ngFor="let trip of trips">
-            <strong>Conductor:</strong> {{ trip.driverName }} <br>
-            <strong>Teléfono:</strong> {{ trip.phoneNumber }} <br>
-            <strong>Ruta:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }})
-          </li>
-        </ul>
+        <h3 *ngIf="!selectedTrip">trips found</h3>
+        <!-- <ul> -->
+          <ng-container *ngIf="!selectedTrip" >
+            <button class="tripsFound"  *ngFor="let trip of trips" (click)="addUserToTrip(trip.tripId)">
+              <strong>driver:</strong> {{ trip.driverName }} <br>
+              <strong>phone number:</strong> {{ trip.phoneNumber }} <br>
+              <strong>route:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }}) <br>
+              <strong>fare:</strong> ${{ trip.fare }}
+            </button>
+
+          </ng-container>
+          
+
+          <ng-container *ngIf="selectedTrip">
+            <h3>selected trip</h3>
+            <p><strong>driver:</strong> {{ selectedTrip.driverName }}</p>
+            <p><strong>phone number:</strong> {{ selectedTrip.phoneNumber }}</p>
+            <p><strong>route:</strong> ({{ selectedTrip.route.origin.lat }}, {{ selectedTrip.route.origin.lng }}) → ({{ selectedTrip.route.destination.lat }}, {{ selectedTrip.route.destination.lng }})</p>
+            <p><strong>fare:</strong> ${{ selectedTrip.fare }}</p>
+            <!-- <button class="boton2" (click)="clearSelection()">Volver</button> -->
+          </ng-container>
+        <!-- </ul> -->
           
         
       </div>

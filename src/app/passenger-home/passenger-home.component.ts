@@ -24,6 +24,8 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
   olat: number = 0;
   olng: number = 0;
 
+  selectedTrip: any | null = null; // Variable para almacenar el viaje seleccionado
+
   trips: any[] = []; // Lista de viajes encontrados
   
   accuracy = 50; // Radio en metros
@@ -439,6 +441,34 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
         // alert('Error finding trips. Please try again.');
       }
     );
+  }
+
+
+  addUserToTrip(tripId: string): void {
+    // Obtén el userId del localStorage
+    const userId = localStorage.getItem('token');
+    
+    if (!userId) {
+      // alert('No se encontró el ID de usuario en el localStorage.');
+      return;
+    }
+    console.log('userid', userId);
+    console.log('tripid', tripId);
+    // Llama al servicio para agregar al usuario al viaje
+    this.tripService.addUserInTrip(tripId, userId).subscribe({
+      next: (response) => {
+        // alert('Te has unido al viaje con éxito.');
+        this.selectedTrip = this.trips.find(trip => trip.tripId === tripId);
+      },
+      error: (error) => {
+        console.error('Error al unirte al viaje:', error);
+        // alert('Hubo un error al intentar unirte al viaje.');
+      },
+    });
+  }
+
+  clearSelection() {
+    this.selectedTrip = null; // Limpia el viaje seleccionado
   }
 
 }

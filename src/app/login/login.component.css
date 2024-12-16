@@ -2,7 +2,7 @@
 
 
 .main-container {
-    height: 100vh;
+    min-height: 100vh;
     /* background-color: none; */
     position: relative; /* Necesario para posicionar el pseudo-elemento */
     overflow: hidden; /* Para evitar que el pseudo-elemento se desborde */
@@ -28,13 +28,13 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: calc(100vh - 60px);
+	min-height: calc(100vh - 60px);
 }
 
 .screen {
 	background: linear-gradient(90deg, #abce83, #759850);
 	position: relative;
-	height: 600px;
+	min-height: 600px;
 	width: 360px;
 	box-shadow: 0px 0px 24px #393315;
 	border-radius: 16px;

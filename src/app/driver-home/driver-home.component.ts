@@ -26,7 +26,7 @@ userLocation: google.maps.LatLngLiteral | null = null;
   dlng: number = 0;
   olat: number = 0;
   olng: number = 0;
-
+  postedRide: boolean = false;
 
   accuracy = 50; // Radio en metros
 
@@ -443,6 +443,7 @@ userLocation: google.maps.LatLngLiteral | null = null;
 
     this.tripService.addTrip(tripData).subscribe({
       next: (response) => {
+        this.postedRide = true;
         alert('Viaje publicado con éxito');
       },
       error: (error) => {
