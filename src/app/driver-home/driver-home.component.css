@@ -64,3 +64,12 @@
   width: 70%;
 
 }
+
+.driver-post-container button{
+  width: 100%;
+}
+
+.timeLeft {
+  width: 100%;
+  text-align: center;
+}

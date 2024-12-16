@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TripService {
-  private baseUrl = 'http://192.168.100.82:3000/trips'; // Cambia esto por la URL de tu backend
+  private baseUrl = 'http://192.168.100.129:3000/trips'; // Cambia esto por la URL de tu backend
 
   constructor(private http: HttpClient) {}
 

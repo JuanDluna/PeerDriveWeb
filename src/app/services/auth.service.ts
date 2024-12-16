@@ -6,7 +6,7 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.100.82:3000/users';
+  private apiUrl = 'http://192.168.100.129:3000/users';
 
   constructor(private http: HttpClient) {}
 

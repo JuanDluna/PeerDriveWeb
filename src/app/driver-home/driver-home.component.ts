@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -12,7 +12,7 @@ import { TripService } from '../services/trip.service';
   templateUrl: './driver-home.component.html',
   styleUrl: './driver-home.component.css'
 })
-export class DriverHomeComponent implements OnInit, AfterViewInit {
+export class DriverHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 userLocation: google.maps.LatLngLiteral | null = null;
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   zoom = 16;
@@ -27,6 +27,9 @@ userLocation: google.maps.LatLngLiteral | null = null;
   olat: number = 0;
   olng: number = 0;
   postedRide: boolean = false;
+
+  timeLeft: number = 15 * 60; // 15 minutos en segundos
+  private timerInterval: any;
 
   accuracy = 50; // Radio en metros
 
@@ -246,6 +249,7 @@ userLocation: google.maps.LatLngLiteral | null = null;
   ngOnInit() {
     this.getUserLocation();
     this.initializeAutocomplete();
+    this.startTimer();
   }
 
   ngAfterViewInit() {
@@ -267,6 +271,33 @@ userLocation: google.maps.LatLngLiteral | null = null;
   enableMapSelection(type: 'origin' | 'destination') {
     this.selectingFor = type;
     alert(`Click on the map to select ${type}`);
+  }
+
+  startTimer() {
+    if (this.postedRide && !this.timerInterval) {
+      this.timerInterval = setInterval(() => {
+        if (this.timeLeft > 0) {
+          this.timeLeft--;
+          console.log('tiempo disminuido');
+        } else {
+          clearInterval(this.timerInterval);
+          this.timerInterval = null;
+          console.log('Timer terminado');
+        }
+      }, 1000);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+  }
+
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
   // Obtener ubicación del dispositivo
@@ -444,15 +475,16 @@ userLocation: google.maps.LatLngLiteral | null = null;
     this.tripService.addTrip(tripData).subscribe({
       next: (response) => {
         this.postedRide = true;
-        alert('Viaje publicado con éxito');
+        this.startTimer();
+        // alert('Viaje publicado con éxito');
       },
       error: (error) => {
         console.error('Error al publicar el viaje:', error);
-        alert('No se pudo publicar el viaje. Inténtalo de nuevo.');
+        // alert('No se pudo publicar el viaje. Inténtalo de nuevo.');
       }
     });
     } else {
-      alert('Please select valid origin and destination locations.');
+      // alert('Please select valid origin and destination locations.');
     }
   }
 }
