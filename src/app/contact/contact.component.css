@@ -58,6 +58,7 @@ body {
   .contact-header p {
     font-size: 1.2em;
     color: #555;
+    text-align: left;
   }
   
   .contact-content .contact-item {

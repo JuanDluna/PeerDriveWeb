@@ -24,6 +24,14 @@ a:hover {
     justify-content: space-between;
 }
 
+
+
+.rolePage:hover {
+    cursor: pointer;
+    color: #759850;
+
+}
+
 .navbar2 .logo a {
     font-size: 1.5rem;
     font-weight: bold;
@@ -86,7 +94,7 @@ a:hover {
 }
 
 .dropdown_menu.open{
-    height: 240px;
+    height: 270px;
 }
 
 .dropdown_menu li {
@@ -137,3 +145,9 @@ a:hover {
     }
 }
 
+.active {
+    font-weight: bold !important;
+    text-decoration: underline !important; /* Opcional */
+    color: #007bff; /* Cambia el color si lo deseas */
+  }
+  

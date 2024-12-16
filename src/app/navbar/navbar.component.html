@@ -1,27 +1,38 @@
 <div class="navbar2">
-    <div class="logo">
-      <a href="home">
-        <img src="assets/logoPeerDrive.png" alt="nose" width="50">
+  <div class="logo">
+    <a routerLink="home">
+      <img src="assets/logoPeerDrive.png" alt="nose" width="50">
       peerDrive
-      </a>
-    </div>
-    <ul class="links">
-      <li><a href="home">home</a></li>
-      <li><a href="about">about</a></li>
-      <li><a href="help">help</a></li>
-      <li><a href="contact">contact</a></li>
-    </ul>
-    <a href="login" class="action_btn">join now</a>
-    <div class="toggle_btn" (click)="toggleMenu()">
-      <i [ngClass]="menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
-    </div>
+    </a>
   </div>
-  
-  <div class="dropdown_menu" [ngClass]="{'open': menuOpen}">
-    <li><a href="home">home</a></li>
-    <li><a href="about">about</a></li>
-    <li><a href="help">help</a></li>
-    <li><a href="contact">contact</a></li>
-    <a href="login" class="action_btn">join now</a>
+  <ul class="links">
+    <li><a routerLink="/home" routerLinkActive="active">home</a></li>
+    <li><a routerLink="/about" routerLinkActive="active">about</a></li>
+    <li><a routerLink="/help" routerLinkActive="active">help</a></li>
+    <li><a routerLink="/contact" routerLinkActive="active">contact</a></li>
+  </ul>
+  <ng-container *ngIf="!isAuthenticated; else loggedIn">
+    <a routerLink="login" class="action_btn" routerLinkActive="active">join now</a>
+  </ng-container>
+  <ng-template #loggedIn>
+    <a class="rolePage" (click)="goToRolePage()">{{ role }} page</a>
+    <a class="action_btn" (click)="logout()">logout</a>
+  </ng-template>
+  <div class="toggle_btn" (click)="toggleMenu()">
+    <i [ngClass]="menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
   </div>
-  
+</div>
+
+<div class="dropdown_menu" [ngClass]="{'open': menuOpen}">
+  <li><a routerLink="home" routerLinkActive="active">home</a></li>
+  <li><a routerLink="about" routerLinkActive="active">about</a></li>
+  <li><a routerLink="help" routerLinkActive="active">help</a></li>
+  <li><a routerLink="contact" routerLinkActive="active">contact</a></li>
+  <ng-container *ngIf="!isAuthenticated; else loggedIn">
+    <a routerLink="login" class="action_btn" routerLinkActive="active">join now</a>
+  </ng-container>
+  <ng-template #loggedIn>
+    <a class="rolePage" (click)="goToRolePage()">{{ role }} page</a>
+    <a class="action_btn" (click)="logout()">logout</a>
+  </ng-template>
+</div>

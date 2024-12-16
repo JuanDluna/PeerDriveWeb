@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AuthService } from '../services/auth.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -15,7 +16,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -30,9 +31,20 @@ export class LoginComponent {
       console.log('usuario', email);
       this.authService.login(email, password).subscribe({
         next: (response: any) => {
-          console.log('Login successful:', response);
-          // Aquí puedes redirigir al usuario o guardar el token
-          // Ejemplo: this.router.navigate(['/dashboard']);
+          console.log('Respuesta completa:', response);
+          if (response?.user?.type) {
+            const token = response.user.id; // Puedes usar el ID como token o adaptarlo
+            const role = response.user.type; // Esto será "driver" o "passenger"
+            
+            // Guarda la sesión
+            this.authService.saveSession(token, role);
+
+            // Redirige según el rol
+            this.router.navigate([`/${role}`]);
+          } else {
+          console.error('El JSON no contiene los datos esperados:', response);
+          this.errorMessage = 'Unexpected response structure.';
+          }
         },
         error: (error) => {
           console.error('Login failed:', error);
