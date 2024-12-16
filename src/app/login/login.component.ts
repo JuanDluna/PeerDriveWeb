@@ -16,6 +16,9 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
+  // Estado actual de la vista
+  currentView: 'login' | 'register' = 'login';
+
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -26,33 +29,28 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      console.log("toy en el submit");
-      console.log('contrasena', password);
-      console.log('usuario', email);
       this.authService.login(email, password).subscribe({
         next: (response: any) => {
-          console.log('Respuesta completa:', response);
           if (response?.user?.type) {
-            const token = response.user.id; // Puedes usar el ID como token o adaptarlo
-            const role = response.user.type; // Esto será "driver" o "passenger"
-            
-            // Guarda la sesión
-            this.authService.saveSession(token, role);
+            const token = response.user.id;
+            const role = response.user.type;
 
-            // Redirige según el rol
+            this.authService.saveSession(token, role);
             this.router.navigate([`/${role}`]);
           } else {
-          console.error('El JSON no contiene los datos esperados:', response);
-          this.errorMessage = 'Unexpected response structure.';
+            this.errorMessage = 'Unexpected response structure.';
           }
         },
-        error: (error) => {
-          console.error('Login failed:', error);
+        error: () => {
           this.errorMessage = 'Invalid credentials, please try again.';
         },
       });
     } else {
       this.errorMessage = 'Please fill out the form correctly.';
     }
+  }
+
+  toggleView(view: 'login' | 'register'): void {
+    this.currentView = view;
   }
 }

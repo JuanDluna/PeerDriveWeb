@@ -202,3 +202,30 @@
 .social-login__icon:hover {
 	transform: scale(1.2);
 }
+
+.toggle-buttons {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.toggle-button {
+	background-color: transparent;
+	border: none;
+	color: #759850;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 10px 20px;
+	transition: color 0.3s, background-color 0.3s;
+}
+
+.toggle-button.active {
+	background-color: #759850;
+	color: #fff;
+	border-radius: 16px;
+}
+
+.toggle-button:hover {
+	color: #759850;
+}
