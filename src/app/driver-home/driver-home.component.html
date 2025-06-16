@@ -3,6 +3,16 @@
 <div class="container2">
     <div class="left-panel">
         <h1 class="my-5">post your ride</h1>
+          <div class="rating">
+            <ng-container *ngFor="let star of stars; let i = index">
+              <ng-container [ngSwitch]="getStarType(i)">
+                <span *ngSwitchCase="'full'" class="star filled">★</span>
+                <span *ngSwitchCase="'half'" class="star half-filled">★</span>
+                <span *ngSwitchDefault class="star">★</span>
+              </ng-container>
+            </ng-container>
+            <span class="rating-value">{{ fakeRating }} / 5</span>
+          </div>
         <form (ngSubmit)="postTrip()">
             <label class="fs-4" for="origin">origin:</label>
             <div class="input2">

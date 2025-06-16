@@ -244,12 +244,16 @@ userLocation: google.maps.LatLngLiteral | null = null;
   directionsService: google.maps.DirectionsService | null = null;
   directionsRenderer: google.maps.DirectionsRenderer | null = null;
 
+  fakeRating: number = 0;
+  stars: number[] = [1, 2, 3, 4, 5];
+
   constructor(private tripService: TripService) {}
 
   ngOnInit() {
     this.getUserLocation();
     this.initializeAutocomplete();
     this.startTimer();
+    this.generateFakeRating();
   }
 
   ngAfterViewInit() {
@@ -266,7 +270,17 @@ userLocation: google.maps.LatLngLiteral | null = null;
     }
   }
 
-  
+  generateFakeRating() {
+    const rating = Math.random() * 0.5 + 4.5;
+    this.fakeRating = parseFloat(rating.toFixed(1)); 
+  }  
+
+  getStarType(index: number): 'full' | 'half' | 'empty' {
+   const diff = this.fakeRating - index;
+   if (diff >= 1) return 'full';
+   if (diff >= 0.5) return 'half';
+   return 'empty';
+  }
 
   enableMapSelection(type: 'origin' | 'destination') {
     this.selectingFor = type;
