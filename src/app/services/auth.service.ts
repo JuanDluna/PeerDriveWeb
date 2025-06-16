@@ -1,23 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.50.196:3000/users';
+  private baseUrl = `${environment.backendUrl}/usuarios`;
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string) {
-    return this.http
-      .post(`${this.apiUrl}/login`, { email, password })
-      .pipe(catchError(this.handleError));
-  }
+login(email: string, password: string): Observable<any> {
+  return this.http.post(`${this.baseUrl}/login`, { email, password }).pipe(
+    map((res: any) => {
+      console.log('Respuesta del backend:', res); // 👈 Agrega esto
+
+      if (!res || !res.user || !res.user.id) {
+        throw new Error("Unexpected response structure.");
+      }
+
+      this.saveSession(res.user.id, res.user.tipo_usuario, res.user.nombre);
+      return res;
+    }),
+    catchError(this.handleError)
+  );
+}
+
 
   register(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, data);
+    return this.http.post(`${this.baseUrl}/register`, data).pipe(
+      map((res: any) => res),
+      catchError(this.handleError)
+    );
   }
 
   logout(): void {

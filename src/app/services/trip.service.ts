@@ -1,14 +1,24 @@
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TripService {
-  private baseUrl = 'http://192.168.50.196:3000/trips'; // Cambia esto por la URL de tu backend
+  private http = inject(HttpClient);
+  private baseUrl = `${environment.backendUrl}/viajes`;
 
-  constructor(private http: HttpClient) {}
+  getTrips(): Observable<any> {
+    return this.http.get(this.baseUrl);
+  }
+
+  // addTrip(data: any): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/addTrip`, data);
+  // }
+
+  updateTripStatus(id: number, status: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, { status });
+  }
 
   addTrip(tripData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/addTrip`, tripData);

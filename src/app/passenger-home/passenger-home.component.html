@@ -24,16 +24,22 @@
         <!-- <ul> -->
           <ng-container *ngIf="!selectedTrip" >
             <ng-container *ngFor="let trip of trips">
-              <button class="tripsFound mt-3"  *ngIf="trip.remainingTime > 0" (click)="addUserToTrip(trip.tripId)">
+              <button class="tripsFound mt-3"   (click)="addUserToTrip(trip.tripId)">
               
-                <strong>driver:</strong> {{ trip.driverName }} <br>
-                <strong>driver plate:</strong> {{ trip.carDetails.plate }} <br>
-                <strong>driver model:</strong> {{ trip.carDetails.model }} <br>
-                <strong>driver color:</strong> {{ trip.carDetails.color }} <br>
-                <strong>schedule:</strong> {{ trip.schedule }} <br>
-                <strong>phone number:</strong> {{ trip.phoneNumber }} <br>
-                <strong>route:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }}) <br>
-                <strong>fare:</strong> ${{ trip.fare }} <br>
+                <strong>driver:</strong> {{ trip.id_conductor }} <br>
+                <!-- <strong>driver plate:</strong> {{ trip.carDetails.plate }} <br> -->
+                <!-- <strong>driver model:</strong> {{ trip.carDetails.model }} <br> -->
+                <!-- <strong>driver color:</strong> {{ trip.carDetails.color }} <br> -->
+                <!-- <strong>schedule:</strong> {{ trip.schedule }} <br> -->
+                <!-- <strong>phone number:</strong> {{ trip.phoneNumber }} <br> -->
+                <!-- <strong>route:</strong> ({{ trip.route.origin.lat }}, {{ trip.route.origin.lng }}) → ({{ trip.route.destination.lat }}, {{ trip.route.destination.lng }}) <br> -->
+                <strong>fare:</strong> ${{ trip.costo }} <br>
+                <strong>id_viaje:</strong> ${{ trip.id_viaje }} <br>
+                <strong>estado:</strong> ${{ trip.estado }} <br>
+                <strong>fecha_hora_inicio:</strong> ${{ trip.fecha_hora_inicio }} <br>
+                <strong>id_ruta:</strong> ${{ trip.id_ruta }} <br>
+                
+
                 <span *ngIf="trip.remainingTime > 0">
                   <strong>Time left:</strong> {{ trip.remainingTime | date:'mm:ss' }}
                 </span>

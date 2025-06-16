@@ -47,10 +47,10 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
         next: (response: any) => {
-          if (response?.user?.type) {
-            const token = response.user.id;
-            const role = response.user.type;
-            const name = response.user.name;
+          if (response?.user?.tipo_usuario) {
+            const token = response.user.id_usuario;
+            const role = response.user.tipo_usuario;
+            const name = response.user.nombre;
 
             this.authService.saveSession(token, role, name);
             this.router.navigate([`/${role}`]);
