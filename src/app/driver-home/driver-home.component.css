@@ -75,3 +75,34 @@
   width: 100%;
   text-align: center;
 }
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: lightgray;
+  position: relative;
+  display: inline-block;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.star.half-filled::before {
+  content: '★';
+  color: gold;
+  position: absolute;
+  width: 50%;
+  overflow: hidden;
+}
+
+.rating-value {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  color: #555;
+}
