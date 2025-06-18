@@ -2,6 +2,5 @@
 export const environment = {
     production: false,
     googleMapsApiKey: 'AIzaSyB35ni6lJiGN-6YV0VEhEZfCj-2QhB-LNY',
-    backendUrl: 'http://192.168.1.79:3000'
+    backendUrl: 'http://192.168.100.126:3000'
   };
-  
