@@ -106,8 +106,8 @@
 					<div class="login__field">
 					  <label for="type">Type</label>
 					  <select id="type" class="login__input" formControlName="type">
-						<option value="driver">Driver</option>
-						<option value="passenger">Passenger</option>
+						<option value="conductor">Driver</option>
+						<option value="pasajero">Passenger</option>
 					  </select>
 					</div>
 				  
@@ -116,15 +116,23 @@
 						<div formGroupName="carDetails">
 							<div class="login__field">
 							  <i class="login__icon fas fa-car"></i>
-							  <input type="text" class="login__input" placeholder="Plate" formControlName="plate" />
+							  <input type="text" class="login__input" placeholder="Plate" formControlName="placa" />
 							</div>
 							<div class="login__field">
 							  <i class="login__icon fas fa-car-side"></i>
-							  <input type="text" class="login__input" placeholder="Model" formControlName="model" />
+							  <input type="text" class="login__input" placeholder="Brand" formControlName="marca" />
+							</div>
+							<div class="login__field">
+							  <i class="login__icon fas fa-car-side"></i>
+							  <input type="text" class="login__input" placeholder="Model" formControlName="modelo" />
 							</div>
 							<div class="login__field">
 							  <i class="login__icon fas fa-paint-brush"></i>
 							  <input type="text" class="login__input" placeholder="Color" formControlName="color" />
+							</div>
+							<div class="login__field">
+							  <i class="login__icon fas fa-car-side"></i>
+							  <input type="number" class="login__input" placeholder="Capacity" formControlName="capacidad" />
 							</div>
 						  </div>
 					</div>

@@ -14,13 +14,14 @@ export class AuthService {
 login(email: string, password: string): Observable<any> {
   return this.http.post(`${this.baseUrl}/login`, { email, password }).pipe(
     map((res: any) => {
-      console.log('Respuesta del backend:', res); // 👈 Agrega esto
+      console.log('Respuesta del backend:', res);
 
-      if (!res || !res.user || !res.user.id) {
+      // Cambia res.user.id a res.user.id_usuario
+      if (!res || !res.user || !res.user.id_usuario) {
         throw new Error("Unexpected response structure.");
       }
 
-      this.saveSession(res.user.id, res.user.tipo_usuario, res.user.nombre);
+      this.saveSession(res.user.id_usuario, res.user.tipo_usuario, res.user.nombre);
       return res;
     }),
     catchError(this.handleError)
@@ -28,7 +29,9 @@ login(email: string, password: string): Observable<any> {
 }
 
 
+
   register(data: any): Observable<any> {
+    console.log("ESTOY EN REGISTER");
     return this.http.post(`${this.baseUrl}/register`, data).pipe(
       map((res: any) => res),
       catchError(this.handleError)

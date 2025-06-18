@@ -28,6 +28,15 @@ export class TripService {
     return this.http.post(`${this.baseUrl}/find`, body);
   }
 
+  findTripsNearby(
+  origin: { lat: number; lng: number },
+  destination: { lat: number; lng: number },
+  maxDistanceKm = 1
+) {
+  return this.http.post<any[]>(`${this.baseUrl}/find-trips`, { origin, destination, maxDistanceKm });
+}
+
+
   addUserInTrip(tripId: string, userId: string): Observable<any> {
     const body = { tripId, userId };
     return this.http.post(`${this.baseUrl}/addUserInTrip`, body);

@@ -249,6 +249,7 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
     this.initializeAutocomplete();
     this.startCountdown();
   }
+  
 
   ngAfterViewInit() {
     this.onMapLoad();
@@ -423,47 +424,58 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  startCountdown() {
-    // Ejecutar cada segundo
-    interval(1000).subscribe(() => {
-      const currentTime = new Date().getTime();
+startCountdown() {
+  interval(1000).subscribe(() => {
+    const now = new Date();
+    
+    // Hora local ajustada a zona horaria de México (UTC-6)
+    const mexicoOffsetMinutes = -6 * 60;
+    let currentTime = now.getTime() + (mexicoOffsetMinutes - now.getTimezoneOffset()) * 60 * 1000;
 
-      this.trips.forEach(trip => {
-        const scheduleTime = new Date(trip.schedule).getTime();
-        const timeDiff = scheduleTime + 15 * 60 * 1000 - currentTime; // 15 minutos en milisegundos
+    currentTime += 6 * 60 * 60 * 1000;
 
-        // Si el tiempo restante es positivo, actualizarlo
-        if (timeDiff > 0) {
-          trip.remainingTime = timeDiff;
-        } else {
-          // Si ya no queda tiempo, ocultar el contador
-          trip.remainingTime = 0;
-        }
-      });
-    });
-  }
-  
-  searchTrips() {
-    if (!this.olat || !this.olng || !this.dlat || !this.dlng) {
-      alert('Please select both origin and destination.');
-      return;
-    }
-  
-    const origin = { lat: this.olat, lng: this.olng };
-    const destination = { lat: this.dlat, lng: this.dlng };
-  
-    this.tripService.findTrips(origin, destination).subscribe(
-      (trips) => {
-        console.log('Trips found:', trips);
-        // alert(`${trips.length} trips found.`);
-        this.trips = trips;
-      },
-      (error) => {
-        console.error('Error finding trips:', error);
-        // alert('Error finding trips. Please try again.');
+    this.trips.forEach(trip => {
+      const scheduleTime = new Date(trip.fecha_hora_inicio).getTime(); // ya en hora de México
+
+      const timeDiff = scheduleTime + 15 * 60 * 1000 - currentTime;
+
+      console.log("schedule_time", scheduleTime);
+      console.log("trip.fecha_hora_inicio", trip.fecha_hora_inicio);
+      console.log("CurrentTime ajustado", new Date(currentTime).toISOString());
+      console.log("Conductor", trip.conductor_nombre);
+
+      if (timeDiff > 0) {
+        trip.remainingTime = timeDiff;
+      } else {
+        trip.remainingTime = 0;
       }
-    );
+    });
+  });
+}
+
+  
+searchTrips() {
+  if (!this.olat || !this.olng || !this.dlat || !this.dlng) {
+    alert('Please select both origin and destination.');
+    return;
   }
+
+  const origin = { lat: this.olat, lng: this.olng };
+  const destination = { lat: this.dlat, lng: this.dlng };
+
+  // Pasamos origin, destination y maxDistanceKm (1 km)
+  this.tripService.findTripsNearby(origin, destination, 1).subscribe(
+    (trips) => {
+      console.log('Trips found:', trips);
+      this.trips = trips;
+    },
+    (error) => {
+      console.error('Error finding trips:', error);
+      alert('Error finding trips. Please try again.');
+    }
+  );
+}
+
 
 
   addUserToTrip(tripId: string): void {
@@ -479,12 +491,14 @@ export class PassengerHomeComponent implements OnInit, AfterViewInit {
     // Llama al servicio para agregar al usuario al viaje
     this.tripService.addUserInTrip(tripId, userId).subscribe({
       next: (response) => {
-        // alert('Te has unido al viaje con éxito.');
-        this.selectedTrip = this.trips.find(trip => trip.tripId === tripId);
+        alert('Te has unido al viaje con éxito.');
+        this.selectedTrip = this.trips.find(trip => trip.id_viaje === tripId);
+        console.log("SELECCIONADO");
+        console.log(this.selectedTrip)
       },
       error: (error) => {
         console.error('Error al unirte al viaje:', error);
-        // alert('Hubo un error al intentar unirte al viaje.');
+        alert('Hubo un error al intentar unirte al viaje.');
       },
     });
   }

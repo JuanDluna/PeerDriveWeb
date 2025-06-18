@@ -33,11 +33,13 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      type: ['passenger', Validators.required], // Por defecto, es 'passenger'
+      type: ['pasajero', Validators.required], // Por defecto, es 'passenger'
       carDetails: this.fb.group({
-        plate: [''],
-        model: [''],
+        placa: [''],
+        marca: [''],
+        modelo: [''],
         color: [''],
+        capacidad: [''],
       }),
     });
   }
@@ -75,7 +77,7 @@ export class LoginComponent {
       console.log("car details", formData.carDetails.plate);
 
       // Si el tipo es 'passenger', limpiamos los detalles del auto
-      if (formData.type === 'passenger') {
+      if (formData.type === 'pasajero') {
         console.log("soy pasajero");
         // formData.carDetails = null;
       }
@@ -84,15 +86,18 @@ export class LoginComponent {
 
       this.authService.register(formData).subscribe({
         next: () => {
+          console.log("RESGIST SUCCESS");
           alert('Registration successful!');
           this.toggleView('login');
         },
         error: (error) => {
+          console.log("NOSE");
           console.error('Error during registration:', error);
           this.errorMessage = 'There was an error during registration.';
         },
       });
     } else {
+      console.log("NOFUIVALIOD");
       this.errorMessage = 'Please fill out the form correctly.';
     }
   }
@@ -102,6 +107,6 @@ export class LoginComponent {
   }
 
   isDriver(): boolean {
-    return this.registerForm.get('type')?.value === 'driver';
+    return this.registerForm.get('type')?.value === 'conductor';
   }
 }
